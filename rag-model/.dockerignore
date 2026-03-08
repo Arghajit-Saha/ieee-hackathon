@@ -1,0 +1,9 @@
+.venv
+__pycache__
+*.log
+.env
+keys.env
+db/chroma_db
+node_modules
+.git
+.gitignore
