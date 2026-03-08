@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pydantic
+langchain-chroma
+langchain-huggingface
+python-dotenv
+openrouter
