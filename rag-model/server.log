@@ -1,0 +1,277 @@
+nohup: ignoring input
+INFO:     Will watch for changes in these directories: ['/home/argha/Desktop/ieee/frontend/rag-model']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [28020] using WatchFiles
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [28086]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:46714 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59436 - "POST /query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57890 - "POST /query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45564 - "POST /query HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'server.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28086]
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [28911]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:51996 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51996 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51996 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51996 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51656 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39854 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40988 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40996 - "POST /query_dynamic HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'server.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [28911]
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [30728]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:59554 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54288 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48692 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36150 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52602 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52602 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49344 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40934 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40934 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35546 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55770 - "POST /query HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'server.py'. Reloading...
+INFO:     127.0.0.1:47810 - "POST /query HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [30728]
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [32804]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:47536 - "POST /query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57152 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36454 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37598 - "POST /query_dynamic HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'server.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [32804]
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [39768]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:58508 - "POST /query_dynamic HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'server.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [39768]
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [42302]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:38272 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44296 - "POST /query_dynamic HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'ingest.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [42302]
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [45764]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'ingest.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [45764]
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [46284]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:49092 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39958 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44524 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46904 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35270 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35272 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47632 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47632 - "POST /query_dynamic HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'server.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [46284]
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [49144]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:41646 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56526 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56528 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60542 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55834 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55834 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55834 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55834 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47794 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47794 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59936 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53888 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53888 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56276 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38208 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47932 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47932 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35432 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35432 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50042 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50042 - "POST /query_dynamic HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'server.py'. Reloading...
+INFO:     127.0.0.1:51648 - "POST /query HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [49144]
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [50157]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:48970 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40770 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41436 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41436 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41436 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50816 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50816 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56690 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56690 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56690 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56690 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56690 - "POST /query_dynamic HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'server.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [50157]
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [51334]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55022 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55022 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55022 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55022 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55022 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55022 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55022 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34644 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34654 - "POST /query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34654 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34654 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34654 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34654 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34654 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34654 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34654 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40972 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40972 - "POST /query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57498 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33746 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33746 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52106 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52106 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52106 - "POST /query_dynamic HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52106 - "POST /query_dynamic HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'server.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [51334]
+/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+INFO:     Started server process [53647]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'server.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [53647]
+Process SpawnProcess-13:
+Traceback (most recent call last):
+  File "/usr/lib64/python3.14/multiprocessing/process.py", line 320, in _bootstrap
+    self.run()
+    ~~~~~~~~^^
+  File "/usr/lib64/python3.14/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/uvicorn/_subprocess.py", line 80, in subprocess_started
+    target(sockets=sockets)
+    ~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/uvicorn/server.py", line 75, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "/usr/lib64/python3.14/asyncio/runners.py", line 204, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "/usr/lib64/python3.14/asyncio/runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+  File "/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/uvicorn/server.py", line 79, in serve
+    await self._serve(sockets)
+  File "/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/uvicorn/server.py", line 86, in _serve
+    config.load()
+    ~~~~~~~~~~~^^
+  File "/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/uvicorn/config.py", line 441, in load
+    self.loaded_app = import_from_string(self.app)
+                      ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/argha/Desktop/ieee/.venv/lib64/python3.14/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/usr/lib64/python3.14/importlib/__init__.py", line 88, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap>", line 1398, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1371, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1342, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 938, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 755, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 893, in get_code
+  File "<frozen importlib._bootstrap_external>", line 823, in source_to_code
+  File "<frozen importlib._bootstrap>", line 491, in _call_with_frames_removed
+  File "/home/argha/Desktop/ieee/frontend/rag-model/server.py", line 201
+    "summary": string, // High level clinical summary of the patient's condition and triage urgency.
+                                                                    ^
+SyntaxError: unterminated string literal (detected at line 201)
