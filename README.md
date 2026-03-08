@@ -128,6 +128,18 @@ frontend/
 
 ---
 
+## ⚠️ Important Note for Evaluators / Hackathon Judges
+
+**API Keys Inclusion:** For the scope and ease of testing during the hackathon evaluation, necessary API keys (like OpenRouter) have been intentionally provided alongside the codebase in the `keys.env` file. **Please do not misuse or leak these keys outside of testing the project.**
+
+---
+
 ## 👥 Authors
-Designed & Developed for the **IEEE Hackathon Residency-First Architecture**.
-© 2026 Aura Intelligent Healthcare.
+Designed & Developed for the **IEEE Gen-AI Hackathon**.
+
+*   **Arghajit Saha**
+*   **Arpit Kumar Jha**
+*   **Suyash Gupta**
+*   **Sujal Burnwal**
+
+© 2026.
