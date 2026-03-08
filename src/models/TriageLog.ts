@@ -12,8 +12,9 @@ export interface ITriageLog extends Document {
         type: 'Point';
         coordinates: [number, number];
     };
+    status: 'pending' | 'reviewed' | 'resolved' | 'archived';
     synced: boolean;
-    offlineGeneratedId?: string; 
+    offlineGeneratedId?: string;
     createdAt: Date;
 }
 
@@ -33,6 +34,11 @@ const TriageLogSchema: Schema = new Schema(
         locationAtTimeOfTriage: {
             type: { type: String, enum: ['Point'], default: 'Point' },
             coordinates: { type: [Number] },
+        },
+        status: {
+            type: String,
+            enum: ['pending', 'reviewed', 'resolved', 'archived'],
+            default: 'pending'
         },
         synced: { type: Boolean, default: true },
         offlineGeneratedId: { type: String },

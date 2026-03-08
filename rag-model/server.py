@@ -127,18 +127,21 @@ You MUST reply ONLY with a valid JSON object matching exactly this structure:
             )
 
         raw_output = res.choices[0].message.content.strip()
-        if raw_output.startswith("```json"):
-            raw_output = raw_output.replace("```json", "").replace("```", "").strip()
         
-        try:
-            data = json.loads(raw_output)
-            return QueryResponse(
-                result=data.get("result", "I've analyzed your symptoms."),
-                assessment=data.get("assessment")
-            )
-        except json.JSONDecodeError:
-            # Fallback if LLM fails to output valid JSON
-            return QueryResponse(result=raw_output)
+        import re
+        json_match = re.search(r'\{[\s\S]*\}', raw_output)
+        if json_match:
+            try:
+                data = json.loads(json_match.group(0))
+                return QueryResponse(
+                    result=data.get("result", "I've analyzed your symptoms."),
+                    assessment=data.get("assessment")
+                )
+            except json.JSONDecodeError:
+                pass
+                
+        # Fallback if LLM fails to output valid JSON
+        return QueryResponse(result=raw_output)
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

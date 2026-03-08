@@ -5,6 +5,8 @@ import { PaperPlaneRight, Robot, UserCircle, Warning, ShieldCheck, Siren, WifiSl
 import { useOfflineSync } from '@/hooks/useOfflineSync';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import haptic from '@/lib/haptics';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export type DiseaseMatch = {
     name: string;
@@ -120,13 +122,19 @@ function UrgencyCard({ level, assessment, triageId }: { level: string; assessmen
 
                 {(level === 'Emergency' || level === 'Urgent') && triageId && (
                     <div className="pt-2">
-                        <Link
-                            href={`/patient/consult?room=${triageId}`}
-                            className="w-full inline-flex items-center justify-center gap-2 bg-black text-white px-4 py-3 font-bold text-xs border-2 border-black hover:bg-zinc-800 transition-all uppercase tracking-widest"
+                        <motion.div
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
                         >
-                            <VideoCamera size={16} weight="fill" className="animate-pulse" />
-                            Join Video Consultation
-                        </Link>
+                            <Link
+                                href={`/patient/consult?room=${triageId}`}
+                                onClick={() => haptic.success()}
+                                className="w-full inline-flex items-center justify-center gap-2 bg-black text-white px-4 py-3 font-bold text-xs border-2 border-black hover:bg-zinc-800 transition-all uppercase tracking-widest"
+                            >
+                                <VideoCamera size={16} weight="fill" className="animate-pulse" />
+                                Join Video Consultation
+                            </Link>
+                        </motion.div>
                     </div>
                 )}
                 <div className="pt-2 italic text-[10px] text-zinc-400 border-t border-zinc-100">
@@ -155,6 +163,7 @@ export default function ConversationalTriage() {
     }, [messages]);
 
     const handleReset = () => {
+        haptic.warning();
         setMessages([{
             id: Date.now().toString(),
             role: 'assistant',
@@ -201,6 +210,7 @@ export default function ConversationalTriage() {
             setMessages(prev => prev.filter(m => m.id !== typingId));
 
             if (data.triageResult) {
+                haptic.success();
                 const botId = data.triageResult?.id || String(Date.now() + 1);
                 const botMessage: Message = {
                     id: botId,
@@ -211,6 +221,7 @@ export default function ConversationalTriage() {
                 };
                 setMessages(prev => [...prev, botMessage]);
             } else {
+                haptic.light();
                 setMessages(prev => [...prev, {
                     id: Date.now().toString(),
                     role: 'assistant',
@@ -218,6 +229,7 @@ export default function ConversationalTriage() {
                 }]);
             }
         } catch (error) {
+            haptic.error();
             console.error('Chat error:', error);
             setMessages(prev => prev.filter(m => m.id !== typingId));
             setMessages(prev => [...prev, {
@@ -232,9 +244,9 @@ export default function ConversationalTriage() {
     };
 
     return (
-        <div className="w-full border-2 border-black brutal-shadow bg-white flex flex-col h-[620px] overflow-hidden">
+        <div className="w-full border-2 border-black brutal-shadow bg-white flex flex-col h-[75vh] min-h-[620px] overflow-hidden">
 
-            
+
             <div className="bg-black text-white px-6 py-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                     <Robot size={20} weight="bold" />
@@ -243,12 +255,18 @@ export default function ConversationalTriage() {
                         <p className="text-[9px] font-mono-ui text-zinc-400 tracking-wider">RAG MODEL • ACTIVE</p>
                     </div>
                 </div>
-                <button onClick={handleReset} className="text-zinc-400 hover:text-white p-1.5 transition-colors" title="Reset">
+                <motion.button
+                    whileHover={{ scale: 1.1, rotate: -10 }}
+                    whileTap={{ scale: 0.9 }}
+                    onClick={handleReset}
+                    className="text-zinc-400 hover:text-white p-1.5 transition-colors"
+                    title="Reset"
+                >
                     <ArrowCounterClockwise size={16} weight="bold" />
-                </button>
+                </motion.button>
             </div>
 
-            
+
             {!isOnline && (
                 <div className="bg-amber-100 border-b-2 border-black px-4 py-2 flex items-center gap-2 text-xs font-semibold text-amber-800">
                     <WifiSlash size={14} weight="bold" />
@@ -256,18 +274,22 @@ export default function ConversationalTriage() {
                 </div>
             )}
 
-            
+
             <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-zinc-50 font-sans">
                 {messages.map((msg) => (
-                    <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        key={msg.id}
+                        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
                         <div className={`flex gap-2.5 max-w-[85%] ${msg.role === 'assistant' ? 'flex-row' : 'flex-row-reverse'}`}>
-
-                            
+                            {/* Avatar */}
                             <div className={`w-7 h-7 flex items-center justify-center shrink-0 mt-0.5 ${msg.role === 'assistant' ? 'bg-black text-white' : 'bg-zinc-200 text-zinc-600'}`}>
                                 {msg.role === 'assistant' ? <Robot size={14} weight="bold" /> : <UserCircle size={14} weight="bold" />}
                             </div>
 
-                            
+                            {/* Bubble */}
                             <div className={`px-4 py-3 shadow-sm ${msg.role === 'user' ? 'bg-black text-white' : 'bg-white border-2 border-zinc-200'}`}>
                                 {msg.isTyping ? (
                                     <div className="flex space-x-1 h-5 items-center">
@@ -307,12 +329,12 @@ export default function ConversationalTriage() {
                                 )}
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
                 <div ref={messagesEndRef} />
             </div>
 
-            
+
             <div className="p-4 bg-white border-t-2 border-black">
                 <form onSubmit={handleSubmit} className="flex gap-2">
                     <div className="flex-1 relative">
@@ -326,14 +348,17 @@ export default function ConversationalTriage() {
                         />
                         <Heartbeat size={14} weight="bold" className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-300" />
                     </div>
-                    <button
+                    <motion.button
                         type="submit"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => haptic.light()}
                         disabled={!input.trim() || isProcessing}
                         className="px-5 py-3 bg-black text-white text-sm font-bold border-2 border-black hover:bg-zinc-800 disabled:bg-zinc-300 disabled:border-zinc-300 transition-colors flex items-center gap-2"
                     >
                         <PaperPlaneRight size={14} weight="bold" />
                         <span className="hidden sm:inline uppercase tracking-tighter">Send</span>
-                    </button>
+                    </motion.button>
                 </form>
                 <p className="text-center font-mono text-[9px] text-zinc-400 mt-2 tracking-wider uppercase">Not a substitute for professional medical advice</p>
             </div>

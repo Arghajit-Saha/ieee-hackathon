@@ -3,23 +3,31 @@ import { connectToDatabase } from '@/lib/mongodb';
 import TriageLog from '@/models/TriageLog';
 import Teleconsultation from '@/models/Teleconsultation';
 import User from '@/models/User';
-import { Clock, VideoCamera, FileText, PhoneCall } from '@phosphor-icons/react/dist/ssr';
+import { Clock, VideoCamera, FileText, PhoneCall, CheckCircle } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import ResolveTriageButton from '@/components/dashboard/ResolveTriageButton';
 
 export const dynamic = 'force-dynamic';
 
 export default async function QueuePage() {
     await connectToDatabase();
 
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
-    const triages = await TriageLog.find({ urgencyLevel: { $in: ['Emergency', 'Urgent'] } })
+    const triages = await TriageLog.find({
+        urgencyLevel: { $in: ['Emergency', 'Urgent'] },
+        status: 'pending',
+        createdAt: { $gte: oneDayAgo }
+    })
         .populate('patientId', 'firstName lastName phoneNumber')
         .sort({ createdAt: -1 })
         .limit(20)
         .lean();
 
-
-    const calls = await Teleconsultation.find({ status: 'pending' })
+    const calls = await Teleconsultation.find({
+        status: { $in: ['pending', 'active'] },
+        createdAt: { $gte: oneDayAgo }
+    })
         .populate('patientId', 'firstName lastName phoneNumber')
         .sort({ createdAt: -1 })
         .lean();
@@ -130,6 +138,7 @@ export default async function QueuePage() {
                                                 REVIEW CASE
                                             </Link>
                                         )}
+                                        <ResolveTriageButton triageId={t._id.toString()} />
                                     </div>
                                 </div>
                             ))}

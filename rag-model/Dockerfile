@@ -20,9 +20,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the current directory contents into the container at /app
 COPY . .
 
-# Create a directory for the persistent vector database
-RUN mkdir -p /app/db/chroma_db
-
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PORT=8000

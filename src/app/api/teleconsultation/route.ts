@@ -16,7 +16,7 @@ export async function POST() {
 
         await connectToDatabase();
 
-        
+
         const existing = await Teleconsultation.findOne({
             patientId: payload.userId,
             status: 'pending'
@@ -28,7 +28,7 @@ export async function POST() {
             return NextResponse.json({ roomId: existing._id.toString() }, { status: 200 });
         }
 
-        
+
         const consultation = await Teleconsultation.create({
             patientId: payload.userId,
             type: 'synchronous',
@@ -42,5 +42,32 @@ export async function POST() {
     } catch (error) {
         console.error('Teleconsultation error:', error);
         return NextResponse.json({ error: 'Failed to create teleconsultation' }, { status: 500 });
+    }
+}
+
+export async function PATCH(request: Request) {
+    try {
+        const { id, status } = await request.json();
+
+        if (!id || !status) {
+            return NextResponse.json({ error: 'ID and Status are required' }, { status: 400 });
+        }
+
+        await connectToDatabase();
+
+        const consultation = await Teleconsultation.findByIdAndUpdate(
+            id,
+            { status },
+            { new: true }
+        );
+
+        if (!consultation) {
+            return NextResponse.json({ error: 'Consultation not found' }, { status: 404 });
+        }
+
+        return NextResponse.json({ success: true, consultation });
+    } catch (error) {
+        console.error('Teleconsultation update error:', error);
+        return NextResponse.json({ error: 'Failed to update teleconsultation' }, { status: 500 });
     }
 }

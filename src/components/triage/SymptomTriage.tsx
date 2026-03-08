@@ -10,6 +10,8 @@ import {
     VideoCamera
 } from '@phosphor-icons/react';
 import Link from 'next/link';
+import haptic from '@/lib/haptics';
+import { motion, AnimatePresence } from 'framer-motion';
 
 
 type BodyRegion = {
@@ -83,11 +85,19 @@ function YesNoCard({ question, value, onChange }: { question: Question; value: s
             <p className="text-lg font-extrabold text-zinc-900 mb-6 leading-snug">{question.text}</p>
             <div className="grid grid-cols-2 gap-4">
                 {[{ label: 'Yes', emoji: '✓', selected: 'bg-black text-white border-black' }, { label: 'No', emoji: '✗', selected: 'bg-zinc-800 text-white border-zinc-800' }].map(opt => (
-                    <button key={opt.label} type="button" onClick={() => onChange(opt.label)}
+                    <motion.button
+                        key={opt.label}
+                        type="button"
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                            haptic.selection();
+                            onChange(opt.label);
+                        }}
                         className={`py-6 border-2 text-sm font-bold transition-all duration-150 ${value === opt.label ? opt.selected + ' scale-[0.98] shadow-inner' : 'bg-white text-zinc-600 border-zinc-200 hover:border-zinc-400'}`}>
                         <span className="block text-3xl mb-2">{opt.emoji}</span>
                         {opt.label}
-                    </button>
+                    </motion.button>
                 ))}
             </div>
         </div>
@@ -100,18 +110,26 @@ function ScaleCard({ question, value, onChange }: { question: Question; value: n
             <p className="text-lg font-extrabold text-zinc-900 mb-6 leading-snug">{question.text}</p>
             <div className="flex gap-2 mb-3">
                 {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
-                    <button key={n} type="button" onClick={() => onChange(n)}
+                    <motion.button
+                        key={n}
+                        type="button"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => {
+                            haptic.light();
+                            onChange(n);
+                        }}
                         className={`flex-1 h-14 flex items-center justify-center text-sm font-bold border-2 transition-all duration-150 ${value === n ? 'text-white border-transparent scale-110 shadow-md' : 'bg-white border-zinc-200 text-zinc-500 hover:border-zinc-400'}`}
                         style={value === n ? { backgroundColor: SCALE_COLORS[n - 1], borderColor: SCALE_COLORS[n - 1] } : {}}>
                         {n}
-                    </button>
+                    </motion.button>
                 ))}
             </div>
             <div className="flex justify-between text-xs text-zinc-400 font-mono-ui mb-4">
                 <span>{question.scaleLabels?.[0] ?? 'None'}</span>
                 <span>{question.scaleLabels?.[1] ?? 'Severe'}</span>
             </div>
-            
+
             <div className="h-2 w-full rounded-full" style={{ background: 'linear-gradient(to right, #22c55e, #fbbf24, #ef4444)' }} />
             {value !== null && (
                 <div className="flex items-center gap-2 mt-3">
@@ -129,11 +147,19 @@ function DurationCard({ question, value, onChange }: { question: Question; value
             <p className="text-lg font-extrabold text-zinc-900 mb-6 leading-snug">{question.text}</p>
             <div className="space-y-2">
                 {DURATIONS.map((d, i) => (
-                    <button key={d} type="button" onClick={() => onChange(d)}
+                    <motion.button
+                        key={d}
+                        type="button"
+                        whileHover={{ x: 5 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => {
+                            haptic.selection();
+                            onChange(d);
+                        }}
                         className={`w-full px-5 py-3.5 text-left text-sm font-medium border-2 transition-all duration-150 flex items-center gap-3 ${value === d ? 'bg-black text-white border-black' : 'bg-white text-zinc-700 border-zinc-200 hover:border-black hover:bg-zinc-50'}`}>
                         <span className={`text-xs font-mono-ui font-bold ${value === d ? 'text-zinc-400' : 'text-zinc-300'}`}>0{i + 1}</span>
                         {d}
-                    </button>
+                    </motion.button>
                 ))}
             </div>
         </div>
@@ -144,7 +170,7 @@ function DurationCard({ question, value, onChange }: { question: Question; value
 function RichResultView({
     result, answers, region, onReset
 }: {
-    
+
     result: any;
     answers: Answer[];
     region: BodyRegion;
@@ -187,7 +213,7 @@ function RichResultView({
     return (
         <div className="w-full space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700">
 
-            
+
             <div className={`${cfg.bg} ${cfg.text} border-2 ${cfg.border} p-6 flex flex-col sm:flex-row sm:items-center gap-4 brutal-shadow`}>
                 <div className="flex items-center gap-4">
                     {cfg.icon}
@@ -199,13 +225,19 @@ function RichResultView({
 
                 {(result.urgencyLevel === 'Emergency' || result.urgencyLevel === 'Urgent') && result.id && (
                     <div className="sm:ml-8 flex-1">
-                        <Link
-                            href={`/patient/consult?room=${result.id}`}
-                            className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 font-bold text-sm border-2 border-black brutal-shadow-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                         >
-                            <VideoCamera size={20} weight="fill" className="animate-pulse text-red-600" />
-                            JOIN EMERGENCY VIDEO CONSULT
-                        </Link>
+                            <Link
+                                href={`/patient/consult?room=${result.id}`}
+                                onClick={() => haptic.success()}
+                                className="inline-flex items-center gap-2 bg-white text-black px-6 py-3 font-bold text-sm border-2 border-black brutal-shadow-sm hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all"
+                            >
+                                <VideoCamera size={20} weight="fill" className="animate-pulse text-red-600" />
+                                JOIN EMERGENCY VIDEO CONSULT
+                            </Link>
+                        </motion.div>
                     </div>
                 )}
 
@@ -224,10 +256,10 @@ function RichResultView({
                 </div>
             </div>
 
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
 
-                
+
                 <div className="lg:col-span-2 space-y-4">
                     {assessment?.summary && (
                         <div className="bg-zinc-50 border-l-4 border-black p-4 text-zinc-800 font-medium text-sm leading-relaxed">
@@ -240,7 +272,7 @@ function RichResultView({
                     {assessment && assessment.diseases && assessment.diseases.length > 0 ? (
                         assessment.diseases.map((d, i) => (
                             <div key={i} className={`border-2 ${i === 0 ? 'border-black' : 'border-zinc-200'} bg-white overflow-hidden brutal-shadow-sm`}>
-                                
+
                                 <div className={`px-5 py-4 flex flex-col sm:flex-row sm:items-center gap-3 ${i === 0 ? 'bg-black text-white' : 'bg-zinc-50 border-b border-zinc-200'}`}>
                                     <div className="flex items-center gap-2">
                                         <span className={`text-xs font-mono-ui font-bold ${i === 0 ? 'text-zinc-400' : 'text-zinc-400'}`}>#{i + 1}</span>
@@ -257,7 +289,7 @@ function RichResultView({
                                 </div>
 
                                 <div className="p-5 space-y-5">
-                                    
+
                                     {d.matchedSymptoms && d.matchedSymptoms.length > 0 && (
                                         <div>
                                             <p className="text-[10px] font-mono-ui text-emerald-600 font-bold uppercase tracking-wider mb-2 flex items-center gap-1">
@@ -273,7 +305,7 @@ function RichResultView({
                                         </div>
                                     )}
 
-                                    
+
                                     {d.unmatchedSymptoms && d.unmatchedSymptoms.length > 0 && (
                                         <div>
                                             <p className="text-[10px] font-mono-ui text-zinc-400 font-bold uppercase tracking-wider mb-2 flex items-center gap-1">
@@ -289,7 +321,7 @@ function RichResultView({
                                         </div>
                                     )}
 
-                                    
+
                                     {d.recommendation && (
                                         <div className="bg-zinc-50 p-3 border-l-2 border-black">
                                             <p className="text-[10px] font-mono-ui text-black font-bold uppercase tracking-wider mb-1">Recommendation</p>
@@ -318,9 +350,9 @@ function RichResultView({
                     )}
                 </div>
 
-                
+
                 <div className="space-y-4">
-                    
+
                     <div className="border-2 border-zinc-200 bg-white p-5">
                         <p className="font-mono-ui text-[10px] text-zinc-400 uppercase tracking-wider mb-3">Your Responses</p>
                         <div className="space-y-2">
@@ -340,7 +372,7 @@ function RichResultView({
                         </div>
                     </div>
 
-                    
+
                     {actionCards.map((card, i) => (
                         <div key={i} className="border-2 border-zinc-200 bg-white p-4">
                             <div className="flex items-center gap-2 mb-2">
@@ -351,7 +383,7 @@ function RichResultView({
                         </div>
                     ))}
 
-                    
+
                     <div className="border border-zinc-200 bg-zinc-50 p-4">
                         <p className="text-[10px] text-zinc-400 leading-relaxed font-semibold">
                             ⚠️ {assessment?.disclaimer || 'This is an Aura-powered assessment for informational purposes only. It is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider.'}
@@ -360,10 +392,18 @@ function RichResultView({
                 </div>
             </div>
 
-            
-            <button onClick={onReset} className="w-full py-3.5 border-2 border-black bg-white text-black font-bold text-sm hover:bg-black hover:text-white transition-colors flex items-center justify-center gap-2">
+
+            <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => {
+                    haptic.warning();
+                    onReset();
+                }}
+                className="w-full py-3.5 border-2 border-black bg-white text-black font-bold text-sm hover:bg-black hover:text-white transition-colors flex items-center justify-center gap-2"
+            >
                 <ArrowCounterClockwise size={14} weight="bold" /> Start New Assessment
-            </button>
+            </motion.button>
         </div>
     );
 }
@@ -380,13 +420,13 @@ export default function SymptomTriage() {
     const [currentDynamicQuestion, setCurrentDynamicQuestion] = useState<Question | null>(null);
     const [currentAnswer, setCurrentAnswer] = useState<string | number | null>(null);
     const [isFetchingNext, setIsFetchingNext] = useState(false);
-    
+
     const [result, setResult] = useState<any>(null);
 
-    
+
     const MAX_QUESTIONS = 6;
 
-    
+
     const totalSteps = questionIndex < MAX_QUESTIONS ? MAX_QUESTIONS + 1 : questionIndex + 1;
     const currentStep = step === 'region' ? 1 : questionIndex + 2;
 
@@ -407,7 +447,7 @@ export default function SymptomTriage() {
             if (!res.ok) throw new Error(data.error);
 
             if (data.isComplete || reachedLimit) {
-                
+
                 setResult({
                     id: data.triageId,
                     urgencyLevel: data.urgencyLevel || 'Routine',
@@ -415,12 +455,12 @@ export default function SymptomTriage() {
                 });
                 setStep('result');
             } else {
-                
+
                 setCurrentDynamicQuestion({
                     id: `dq-${history.length}`,
                     text: data.question || 'Please provide more details about your symptoms.',
                     type: data.questionType as 'yesno' | 'scale' | 'duration' || 'yesno',
-                    
+
                     scaleLabels: data.questionType === 'scale' ? ['None', 'Severe'] : undefined
                 });
                 setStep('questions');
@@ -437,7 +477,7 @@ export default function SymptomTriage() {
 
     const handleRegionSelect = async (region: BodyRegion) => {
         if (!isOnline) {
-            
+            haptic.warning();
             setStep('loading');
             await addOfflineTriageLog({ symptoms: [`Region: ${region.label}`], rawInput: `Region: ${region.label}` });
             setResult({ urgencyLevel: 'Pending Sync', recommendedAction: 'Offline. Dynamic questionnaire requires internet. Your selection was saved and will sync later.', isOfflineSaved: true });
@@ -445,18 +485,19 @@ export default function SymptomTriage() {
             return;
         }
 
+        haptic.selection();
         setSelectedRegion(region);
         setAnswers([]);
-        setStep('loading'); 
+        setStep('loading');
 
-        
+
         await fetchNextStep([], region.label);
     };
 
     const handleAnswerNext = async () => {
         if (currentAnswer === null || !currentDynamicQuestion || !selectedRegion) return;
 
-        
+
         const newAnswer: Answer = {
             questionId: currentDynamicQuestion.id,
             questionText: currentDynamicQuestion.text,
@@ -465,28 +506,26 @@ export default function SymptomTriage() {
         const newAnswersList = [...answers, newAnswer];
         setAnswers(newAnswersList);
 
-        
-        
+
+
         const history: { role: string; content: string }[] = [];
         for (const a of newAnswersList) {
             history.push({ role: 'assistant', content: a.questionText });
             history.push({ role: 'user', content: String(a.value) });
         }
 
-        setStep('loading'); 
+        setStep('loading');
         await fetchNextStep(history, selectedRegion.label);
     };
 
     const handleBack = () => {
-        
-        
-        
+        haptic.light();
         if (answers.length > 0) {
             const prevAnswers = answers.slice(0, -1);
             setAnswers(prevAnswers);
             setQuestionIndex(questionIndex - 1);
 
-            
+
             const history: { role: string; content: string }[] = [];
             for (const a of prevAnswers) {
                 history.push({ role: 'assistant', content: a.questionText });
@@ -510,7 +549,7 @@ export default function SymptomTriage() {
         setResult(null);
     };
 
-    
+
     if (step === 'region') {
         return (
             <div className="w-full max-w-5xl mx-auto">
@@ -533,8 +572,13 @@ export default function SymptomTriage() {
 
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                         {BODY_REGIONS.map(region => (
-                            <button key={region.id} onClick={() => handleRegionSelect(region)}
-                                className="group relative border-2 border-zinc-200 p-5 text-left hover:border-black transition-all duration-150 bg-white hover:bg-zinc-50 hover:-translate-y-0.5 hover:shadow-md">
+                            <motion.button
+                                key={region.id}
+                                whileHover={{ scale: 1.02, y: -5 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={() => handleRegionSelect(region)}
+                                className="group relative border-2 border-zinc-200 p-5 text-left hover:border-black transition-all duration-150 bg-white hover:bg-zinc-50 hover:shadow-md"
+                            >
                                 <div className="w-11 h-11 flex items-center justify-center text-2xl mb-3 border-2 rounded-sm"
                                     style={{ backgroundColor: region.color + '18', borderColor: region.color + '50' }}>
                                     {region.emoji}
@@ -542,7 +586,7 @@ export default function SymptomTriage() {
                                 <p className="text-sm font-bold text-zinc-800 leading-tight">{region.label}</p>
                                 <p className="text-xs text-zinc-400 mt-0.5">{region.followUpQuestions.length} questions</p>
                                 <div className="absolute bottom-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity" style={{ backgroundColor: region.color }} />
-                            </button>
+                            </motion.button>
                         ))}
                     </div>
                 </div>
@@ -550,7 +594,7 @@ export default function SymptomTriage() {
         );
     }
 
-    
+
     if (step === 'questions' && currentDynamicQuestion) {
         const q = currentDynamicQuestion;
         return (
@@ -573,26 +617,37 @@ export default function SymptomTriage() {
                     </div>
 
                     <div className="flex gap-3 mt-10">
-                        <button type="button" onClick={handleBack}
+                        <motion.button
+                            type="button"
+                            whileHover={{ backgroundColor: '#f9fafb' }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={handleBack}
                             disabled={isFetchingNext}
-                            className="flex items-center gap-2 px-5 py-3.5 border-2 border-black text-sm font-bold hover:bg-zinc-50 transition-colors disabled:opacity-50">
+                            className="flex items-center gap-2 px-5 py-3.5 border-2 border-black text-sm font-bold hover:bg-zinc-50 transition-colors disabled:opacity-50"
+                        >
                             <ArrowLeft size={14} weight="bold" /> Back
-                        </button>
-                        <button type="button" onClick={handleAnswerNext} disabled={currentAnswer === null || isFetchingNext}
-                            className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-black text-white text-sm font-bold border-2 border-black hover:bg-zinc-800 disabled:bg-zinc-200 disabled:border-zinc-200 disabled:text-zinc-400 transition-colors">
+                        </motion.button>
+                        <motion.button
+                            type="button"
+                            whileHover={{ backgroundColor: '#18181b' }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={handleAnswerNext}
+                            disabled={currentAnswer === null || isFetchingNext}
+                            className="flex-1 flex items-center justify-center gap-2 py-3.5 bg-black text-white text-sm font-bold border-2 border-black hover:bg-zinc-800 disabled:bg-zinc-200 disabled:border-zinc-200 disabled:text-zinc-400 transition-colors"
+                        >
                             {isFetchingNext ? (
                                 <><SpinnerGap size={14} weight="bold" className="animate-spin" /> Evaluating...</>
                             ) : (
                                 <>Next <ArrowRight size={14} weight="bold" /></>
                             )}
-                        </button>
+                        </motion.button>
                     </div>
                 </div>
             </div>
         );
     }
 
-    
+
     if (step === 'loading') {
         return (
             <div className="w-full max-w-4xl mx-auto">
@@ -608,7 +663,7 @@ export default function SymptomTriage() {
         );
     }
 
-    
+
     if (step === 'result' && result) {
         return <RichResultView result={result} answers={answers} region={selectedRegion!} onReset={reset} />;
     }

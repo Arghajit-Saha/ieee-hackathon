@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { List, X, FirstAid, MapTrifold, ChatCircleDots, ChartBar, SignOut, User as UserIcon, VideoCamera } from '@phosphor-icons/react';
 import { useRouter } from 'next/navigation';
+import { motion } from 'framer-motion';
+import haptic from '@/lib/haptics';
 
 const links = [
     { name: 'Triage', href: '/triage', icon: ChatCircleDots },
@@ -60,34 +62,51 @@ export default function Navbar() {
                         if (link.authOnly && !user) return null;
                         const active = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
                         return (
-                            <Link
+                            <motion.div
                                 key={link.name}
-                                href={link.href}
-                                className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${active ? 'bg-black text-white' : 'text-zinc-600 hover:bg-zinc-100'
-                                    }`}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                             >
-                                <link.icon size={16} weight={active ? 'fill' : 'bold'} />
-                                {link.name}
-                            </Link>
+                                <Link
+                                    href={link.href}
+                                    onClick={() => haptic.selection()}
+                                    className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors ${active ? 'bg-black text-white' : 'text-zinc-600 hover:bg-zinc-100'
+                                        }`}
+                                >
+                                    <link.icon size={16} weight={active ? 'fill' : 'bold'} />
+                                    {link.name}
+                                </Link>
+                            </motion.div>
                         );
                     })}
 
                     {user ? (
-                        <button
-                            onClick={handleLogout}
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => {
+                                haptic.warning();
+                                handleLogout();
+                            }}
                             className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
                         >
                             <SignOut size={16} weight="bold" />
                             Sign Out
-                        </button>
+                        </motion.button>
                     ) : (
-                        <Link
-                            href="/login"
-                            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-black hover:bg-zinc-100 transition-colors"
+                        <motion.div
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                         >
-                            <UserIcon size={16} weight="bold" />
-                            Sign In
-                        </Link>
+                            <Link
+                                href="/login"
+                                onClick={() => haptic.selection()}
+                                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-black hover:bg-zinc-100 transition-colors"
+                            >
+                                <UserIcon size={16} weight="bold" />
+                                Sign In
+                            </Link>
+                        </motion.div>
                     )}
                 </div>
 

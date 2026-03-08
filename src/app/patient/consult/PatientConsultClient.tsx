@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { io, Socket } from 'socket.io-client';
 import { VideoCamera, Microphone, MicrophoneSlash, PhoneX, ChatCircle, PaperPlaneRight } from '@phosphor-icons/react';
+import haptic from '@/lib/haptics';
 
 export default function PatientConsultClient() {
     const router = useRouter();
@@ -55,20 +56,31 @@ export default function PatientConsultClient() {
 
         const initWebRTC = async () => {
             let stream: MediaStream | undefined;
-            const getMedia = navigator.mediaDevices?.getUserMedia?.bind(navigator.mediaDevices);
 
             try {
-                if (getMedia) {
-                    stream = await getMedia({ video: true, audio: true });
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    stream = await navigator.mediaDevices.getUserMedia({
+                        video: true,
+                        audio: true
+                    });
+
                     localStreamRef.current = stream;
                     if (localVideoRef.current) {
                         localVideoRef.current.srcObject = stream;
                     }
                 } else {
-                    console.warn("Camera access not available.");
+                    console.error("navigator.mediaDevices.getUserMedia is not supported on this browser.");
+                    alert("Camera access is not supported by your browser or device.");
                 }
-            } catch (err) {
-                console.error("Media access error:", err);
+            } catch (err: any) {
+                console.error("Detailed Media access error:", err);
+                if (err.name === 'NotAllowedError') {
+                    alert("Camera access was denied. Please allow camera permissions in your browser settings to join the call.");
+                } else if (err.name === 'NotFoundError') {
+                    alert("No camera or microphone found on your device.");
+                } else {
+                    alert("Failed to access camera: " + err.message);
+                }
             }
 
 
@@ -165,6 +177,19 @@ export default function PatientConsultClient() {
             }
         };
 
+        peer.onnegotiationneeded = async () => {
+            try {
+                const offer = await peer.createOffer({
+                    offerToReceiveAudio: true,
+                    offerToReceiveVideo: true
+                });
+                await peer.setLocalDescription(offer);
+                socketInstance.emit('webrtc-signal', { to: targetUser, from: userId, signal: peer.localDescription });
+            } catch (err) {
+                console.error("Negotiation error:", err);
+            }
+        };
+
         peer.ontrack = (event) => {
             if (remoteVideoRef.current) {
                 remoteVideoRef.current.srcObject = event.streams[0];
@@ -196,7 +221,22 @@ export default function PatientConsultClient() {
         }
     };
 
-    const handleEndCall = () => {
+    const handleEndCall = async () => {
+        haptic.heavy();
+
+        // Mark as completed in DB
+        if (roomId && !roomId.startsWith('anon')) {
+            try {
+                await fetch('/api/teleconsultation', {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: roomId, status: 'completed' }),
+                });
+            } catch (e) {
+                console.error("Failed to mark consult as completed:", e);
+            }
+        }
+
         if (socket) {
             socket.emit('end-call', { roomId });
             socket.disconnect();
@@ -282,9 +322,9 @@ export default function PatientConsultClient() {
                         <p className="text-xs text-center text-zinc-400 font-mono-ui mt-10">No messages yet.</p>
                     ) : (
                         messages.map((msg, i) => (
-                            <div key={i} className={`flex flex-col ${msg.senderId === userId ? 'items-end' : 'items-start'}`}>
+                            <div key={i} className={`flex flex-col ${msg.senderId === userId ? 'items-end' : 'items-start'} max-w-full`}>
                                 <span className="text-[9px] uppercase font-mono-ui text-zinc-400 mb-1">{msg.senderId === userId ? 'You' : 'Doctor'}</span>
-                                <div className={`p-3 text-sm border-2 border-black ${msg.senderId === userId ? 'bg-black text-white' : 'bg-zinc-100 text-black'}`}>
+                                <div className={`p-3 text-sm border-2 border-black break-words whitespace-pre-wrap ${msg.senderId === userId ? 'bg-black text-white' : 'bg-zinc-100 text-black'}`}>
                                     {msg.message}
                                 </div>
                             </div>

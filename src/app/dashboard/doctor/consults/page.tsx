@@ -5,6 +5,7 @@ import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import { useSearchParams } from 'next/navigation';
 import { io, Socket } from 'socket.io-client';
 import { VideoCamera, Microphone, MicrophoneSlash, PhoneX, ChatCircle, PaperPlaneRight } from '@phosphor-icons/react';
+import haptic from '@/lib/haptics';
 
 function TeleconsultRoom() {
     const searchParams = useSearchParams();
@@ -142,6 +143,19 @@ function TeleconsultRoom() {
             }
         };
 
+        peer.onnegotiationneeded = async () => {
+            try {
+                const offer = await peer.createOffer({
+                    offerToReceiveAudio: true,
+                    offerToReceiveVideo: true
+                });
+                await peer.setLocalDescription(offer);
+                socketInstance.emit('webrtc-signal', { to: targetUser, from: userId, signal: peer.localDescription });
+            } catch (err) {
+                console.error("Negotiation error:", err);
+            }
+        };
+
         peer.ontrack = (event) => {
             if (remoteVideoRef.current) {
                 remoteVideoRef.current.srcObject = event.streams[0];
@@ -173,7 +187,22 @@ function TeleconsultRoom() {
         }
     };
 
-    const handleEndCall = () => {
+    const handleEndCall = async () => {
+        haptic.heavy();
+
+        // Mark as completed in DB
+        if (roomId && !roomId.startsWith('demo')) {
+            try {
+                await fetch('/api/teleconsultation', {
+                    method: 'PATCH',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: roomId, status: 'completed' }),
+                });
+            } catch (e) {
+                console.error("Failed to mark consult as completed:", e);
+            }
+        }
+
         if (socket) {
             socket.emit('end-call', { roomId });
             socket.disconnect();
@@ -276,9 +305,9 @@ function TeleconsultRoom() {
                             <p className="text-xs text-center text-zinc-400 font-mono-ui mt-10">No messages yet.</p>
                         ) : (
                             messages.map((msg, i) => (
-                                <div key={i} className={`flex flex-col ${msg.senderId === userId ? 'items-end' : 'items-start'}`}>
+                                <div key={i} className={`flex flex-col ${msg.senderId === userId ? 'items-end' : 'items-start'} max-w-full`}>
                                     <span className="text-[9px] uppercase font-mono-ui text-zinc-400 mb-1">{msg.senderId === userId ? 'You' : 'Patient'}</span>
-                                    <div className={`p-3 text-sm border-2 border-black ${msg.senderId === userId ? 'bg-black text-white' : 'bg-zinc-100 text-black'}`}>
+                                    <div className={`p-3 text-sm border-2 border-black break-words whitespace-pre-wrap ${msg.senderId === userId ? 'bg-black text-white' : 'bg-zinc-100 text-black'}`}>
                                         {msg.message}
                                     </div>
                                 </div>
